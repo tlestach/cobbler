@@ -23,7 +23,7 @@ Name: cobbler20
 License: GPLv2+
 AutoReq: no
 Version: 2.0.11
-Release: 86%{?dist}
+Release: 87%{?dist}
 Source0: %{name}-%{version}.tar.gz
 Group: Applications/System
 
@@ -469,6 +469,9 @@ Web interface for Cobbler that allows visiting http://server/cobbler_web to conf
 %doc AUTHORS COPYING CHANGELOG README
 
 %changelog
+* Tue Mar 19 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-87
+- fence-agents are optional
+
 * Tue Mar 12 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-86
 - default to python3 on RHEL8
 
