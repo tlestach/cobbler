@@ -792,12 +792,6 @@ class Koan:
 
     #---------------------------------------------------
         
-    def get_boot_loader_info(self):
-        cmd = [ "/sbin/grubby", "--bootloader-probe" ]
-        probe_process = sub_process.Popen(cmd, stdout=sub_process.PIPE)
-        which_loader = probe_process.communicate()[0].decode()
-        return probe_process.returncode, which_loader
-
     def replace(self):
         """
         Handle morphing an existing system through downloading new
@@ -868,10 +862,6 @@ class Koan:
             if self.grubby_copy_default:
                 cmd.append("--copy-default")
 
-            boot_probe_ret_code, probe_output = self.get_boot_loader_info()
-            if boot_probe_ret_code == 0 and probe_output.find("lilo") >= 0:
-                cmd.append("--lilo")
-
             if self.add_reinstall_entry:
                cmd.append("--title=Reinstall")
             else:
@@ -884,30 +874,16 @@ class Koan:
                cmd.append("--config-file=/tmp/boot/boot/grub/grub.conf")
 
             # Are we running on ppc?
-            if arch.startswith("ppc"):
-                cmd.append("--yaboot")
-            elif arch.startswith("s390"):
+            if arch.startswith("s390"):
                 cmd.append("--zipl")
 
             utils.subprocess_call(cmd)
 
             # Any post-grubby processing required (e.g. ybin, zipl, lilo)?
-            if arch.startswith("ppc"):
-                # FIXME - CHRP hardware uses a 'PPC PReP Boot' partition and doesn't require running ybin
-                print("- applying ybin changes")
-                cmd = [ "/sbin/ybin" ]
-                utils.subprocess_call(cmd)
-            elif arch.startswith("s390"):
+            if arch.startswith("s390"):
                 print("- applying zipl changes")
                 cmd = [ "/sbin/zipl" ]
                 utils.subprocess_call(cmd)
-            else:
-                # if grubby --bootloader-probe returns lilo,
-                #    apply lilo changes
-                if boot_probe_ret_code == 0 and probe_output.find("lilo") != -1:
-                    print("- applying lilo changes")
-                    cmd = [ "/sbin/lilo" ]
-                    utils.subprocess_call(cmd)
 
             if not self.add_reinstall_entry:
                 print("- reboot to apply changes")
