@@ -13,9 +13,6 @@
 
 %define manzip %{?mageia:xz}%{!?mageia:gz}
 
-%{!?__python2: %global __python2 /usr/bin/python2}
-%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-
 %define _binaries_in_noarch_packages_terminate_build 0
 %global debug_package %{nil}
 Summary: Boot server configurator
@@ -113,8 +110,8 @@ PREFIX="--prefix=/usr"
 %endif
 %{__python2} setup.py install --optimize=1 --root=$RPM_BUILD_ROOT $PREFIX
 %if 0%{?build_py2}
-mv $RPM_BUILD_ROOT/usr/bin/koan $RPM_BUILD_ROOT/usr/bin/koan-%{python_version}
-mv $RPM_BUILD_ROOT/usr/bin/cobbler-register $RPM_BUILD_ROOT/usr/bin/cobbler-register-%{python_version}
+mv $RPM_BUILD_ROOT/usr/bin/koan $RPM_BUILD_ROOT/usr/bin/koan-%{python2_version}
+mv $RPM_BUILD_ROOT/usr/bin/cobbler-register $RPM_BUILD_ROOT/usr/bin/cobbler-register-%{python2_version}
 %endif
 %if 0%{?build_py3}
 make clean
@@ -123,7 +120,7 @@ mv $RPM_BUILD_ROOT/usr/bin/koan $RPM_BUILD_ROOT/usr/bin/koan-%{python3_version}
 mv $RPM_BUILD_ROOT/usr/bin/cobbler-register $RPM_BUILD_ROOT/usr/bin/cobbler-register-%{python3_version}
 %endif
 # create links to default script version
-%define default_suffix %{?default_py3:-%{python3_version}}%{!?default_py3:-%{python_version}}
+%define default_suffix %{?default_py3:-%{python3_version}}%{!?default_py3:-%{python2_version}}
 ln -s "koan%{default_suffix}" "$RPM_BUILD_ROOT%{_bindir}/koan"
 ln -s "cobbler-register%{default_suffix}" "$RPM_BUILD_ROOT%{_bindir}/cobbler-register"
 mkdir $RPM_BUILD_ROOT/var/www/cobbler/rendered/
@@ -382,6 +379,7 @@ of an existing system.  For use with a boot-server configured with Cobbler
 
 Summary: Helper tool that performs cobbler orders on remote machines.
 BuildRequires:  python
+BuildRequires:  python2-rpm-macros
 BuildRequires:  %{python_prefix}-setuptools
 Requires:       python
 
@@ -389,8 +387,8 @@ Requires:       python
 Python 2 specific files for koan.
 
 %files -n python2-koan20
-%{_bindir}/koan-%{python_version}
-%{_bindir}/cobbler-register-%{python_version}
+%{_bindir}/koan-%{python2_version}
+%{_bindir}/cobbler-register-%{python2_version}
 %{python2_sitelib}/koan/
 %endif
 
