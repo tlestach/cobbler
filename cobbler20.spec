@@ -108,8 +108,8 @@ test "x$RPM_BUILD_ROOT" != "x" && rm -rf $RPM_BUILD_ROOT
 %if 0%{?suse_version} >= 1000
 PREFIX="--prefix=/usr"
 %endif
-%{__python2} setup.py install --optimize=1 --root=$RPM_BUILD_ROOT $PREFIX
 %if 0%{?build_py2}
+%{__python2} setup.py install --optimize=1 --root=$RPM_BUILD_ROOT $PREFIX
 mv $RPM_BUILD_ROOT/usr/bin/koan $RPM_BUILD_ROOT/usr/bin/koan-%{python2_version}
 mv $RPM_BUILD_ROOT/usr/bin/cobbler-register $RPM_BUILD_ROOT/usr/bin/cobbler-register-%{python2_version}
 %endif
