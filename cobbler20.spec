@@ -20,7 +20,7 @@ Name: cobbler20
 License: GPLv2+
 AutoReq: no
 Version: 2.0.11
-Release: 88%{?dist}
+Release: 89%{?dist}
 Source0: %{name}-%{version}.tar.gz
 Group: Applications/System
 
@@ -467,6 +467,9 @@ Web interface for Cobbler that allows visiting http://server/cobbler_web to conf
 %doc AUTHORS COPYING CHANGELOG README
 
 %changelog
+* Fri Jun 28 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-89
+- fixed python macro usage
+
 * Mon Apr 15 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-88
 - 1699743 - grubby --bootloader-probe has been deprecated
 
