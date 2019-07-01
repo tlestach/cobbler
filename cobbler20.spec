@@ -8,8 +8,8 @@
 %global python_prefix python2
 %else
 %global python_prefix python
-%global build_py2   1
 %endif
+%global build_py2   1
 
 %define manzip %{?mageia:xz}%{!?mageia:gz}
 
