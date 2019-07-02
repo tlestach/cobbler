@@ -6,8 +6,10 @@
 %define pythonX %{?default_py3: python3}%{!?default_py3: python2}
 %if  0%{?fedora} >= 28  || 0%{?rhel} >= 8
 %global python_prefix python2
+%global pyyaml python2-pyyaml
 %else
 %global python_prefix python
+%global pyyaml PyYAML
 %endif
 %global build_py2   1
 
@@ -62,7 +64,7 @@ Requires: %{python_prefix}-simplejson
 BuildRequires: %{python_prefix}
 BuildRequires: %{python_prefix}-setuptools
 Requires: %{python_prefix}-urlgrabber
-Requires: PyYAML
+Requires: %{pyyaml}
 %if 0%{?suse_version} < 0
 BuildRequires: redhat-rpm-config
 %endif
@@ -77,7 +79,7 @@ Requires(preun): /sbin/chkconfig
 Requires(preun): /sbin/service
 %endif
 
-BuildRequires: PyYAML
+BuildRequires: %{pyyaml}
 BuildRequires: %{python_prefix}-cheetah
 BuildRequires: /usr/bin/pod2man
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -378,10 +380,10 @@ of an existing system.  For use with a boot-server configured with Cobbler
 %package -n python2-koan20
 
 Summary: Helper tool that performs cobbler orders on remote machines.
-BuildRequires:  python
+BuildRequires:  %{python_prefix}
 BuildRequires:  python2-rpm-macros
 BuildRequires:  %{python_prefix}-setuptools
-Requires:       python
+Requires:       %{python_prefix}
 
 %description -n python2-koan20
 Python 2 specific files for koan.
