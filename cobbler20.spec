@@ -22,7 +22,7 @@ Name: cobbler20
 License: GPLv2+
 AutoReq: no
 Version: 2.0.11
-Release: 90%{?dist}
+Release: 91%{?dist}
 Source0: %{name}-%{version}.tar.gz
 Group: Applications/System
 
@@ -469,6 +469,10 @@ Web interface for Cobbler that allows visiting http://server/cobbler_web to conf
 %doc AUTHORS COPYING CHANGELOG README
 
 %changelog
+* Tue Jul 02 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-91
+- follow current python2 package naming
+- always build python2 server
+
 * Fri Jun 28 2019 Michael Mraka <michael.mraka@redhat.com> 2.0.11-90
 - fixed python2 build on F28+
 
