@@ -437,4 +437,4 @@ def build_commandline(uri,
         cmd += "--import "
     cmd += "--noautoconsole "
 
-    return shlex.split(cmd.strip())
+    return shlex.split(str(cmd.strip()))
