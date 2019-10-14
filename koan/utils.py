@@ -331,6 +331,9 @@ def os_release():
       tokens = rest.split(" ")
       for t in tokens:
          try:
+             # cover also: "CentOS Linux release 8.0.1905 (Core)"
+             while t.count('.') > 1:
+                t = t.rpartition('.')[0]
              return (make,float(t))
          except ValueError:
              pass
